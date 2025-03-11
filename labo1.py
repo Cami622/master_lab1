@@ -1,0 +1,1 @@
+print('Laboratory exercises')
