@@ -19,3 +19,10 @@ def invert_number(n):
 #num_input = 9565
 #inverted = invert_number(num_input)
 #print(inverted) 
+
+#EXERCISE 3 DYLAN
+name=input("give me your name:")
+age=input("give me your age:")
+prof=input("give me your prof:")
+
+print("your name is ",name," your age is ",age," and your proffesion is ",prof)

@@ -217,3 +217,580 @@ int main(void)
     }
 }
 /////////////////////////////////////////// END \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+///////////////////////////////////////////EASY EXERCISE 3///////////////////////////////////
+fácil ej 3
+//*****************************************************************************
+//
+// blinky.c - Simple example to blink the on-board LED.
+//
+// Copyright (c) 2013-2020 Texas Instruments Incorporated.  All rights reserved.
+// Software License Agreement
+// 
+// Texas Instruments (TI) is supplying this software for use solely and
+// exclusively on TI's microcontroller products. The software is owned by
+// TI and/or its suppliers, and is protected under applicable copyright
+// laws. You may not combine this software with "viral" open-source
+// software in order to form a larger program.
+// 
+// THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
+// NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
+// NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
+// CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
+// DAMAGES, FOR ANY REASON WHATSOEVER.
+// 
+// This is part of revision 2.2.0.295 of the EK-TM4C1294XL Firmware Package.
+//
+//*****************************************************************************
+//PASOS PARA COMPILAR 1. MAKE, asi se 
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/hw_memmap.h"
+#include "driverlib/debug.h"
+#include "driverlib/gpio.h"
+#include "driverlib/sysctl.h"
+
+//*****************************************************************************
+//
+//! \addtogroup example_list
+//! <h1>lab3 (lab3)</h1>
+//!
+//! A very simple example that blinks the on-board LED using direct register
+//! access.
+//
+//*****************************************************************************
+
+//*****************************************************************************
+//
+// The error routine that is called if the driver library encounters an error.
+//
+//*****************************************************************************
+#ifdef DEBUG
+void
+_error_(char *pcFilename, uint32_t ui32Line)
+{
+    while(1);
+}
+#endif
+
+//*****************************************************************************
+//
+// Blink the on-board LED.
+//
+//*****************************************************************************
+int main(void)
+{
+    //volatile uint32_t uit32Loop;
+
+    //
+    // Enable the GPIO port that is used for the on-board LED.
+    //
+
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);//habilita el puerto N
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOJ);//habilita el puerto N
+
+    //
+    // Check if the peripheral access is enabled.
+    //
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION))
+    {
+    }
+
+    //
+    // Enable the GPIO pin for the LED (PN0).  Set the direction as output, and
+    // enable the GPIO pin for digital function.
+    //
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
+    GPIOPinTypeGPIOInput(GPIO_PORTJ_BASE, GPIO_PIN_1);
+    GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_1, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);//HABILITA EL PULL UP
+    //
+    // Loop forever.
+    //
+      while(1) {
+        //Si el botón PJ1 es presionado, encender el LED PN1
+        if(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_1) == 0) {  
+            GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+        } else {
+            GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0);
+        }
+    }
+}
+
+/////////////////////////////////////////// END\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
+
+////////////////////////////////////////////HARD EXERCISE 1//////////////////////////////////
+
+//*****************************************************************************
+//
+// blinky.c - Simple example to blink the on-board LED.
+//
+// Copyright (c) 2013-2020 Texas Instruments Incorporated.  All rights reserved.
+// Software License Agreement
+// 
+// Texas Instruments (TI) is supplying this software for use solely and
+// exclusively on TI's microcontroller products. The software is owned by
+// TI and/or its suppliers, and is protected under applicable copyright
+// laws. You may not combine this software with "viral" open-source
+// software in order to form a larger program.
+// 
+// THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
+// NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
+// NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
+// CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
+// DAMAGES, FOR ANY REASON WHATSOEVER.
+// 
+// This is part of revision 2.2.0.295 of the EK-TM4C1294XL Firmware Package.
+//
+//*****************************************************************************
+
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/hw_memmap.h"
+#include "driverlib/debug.h"
+#include "driverlib/gpio.h"
+#include "driverlib/sysctl.h"
+
+//*****************************************************************************
+//
+//! \addtogroup example_list
+//! <h1>Blinky (blinky)</h1>
+//!
+//! A very simple example that blinks the on-board LED using direct register
+//! access.
+//
+//*****************************************************************************
+
+//*****************************************************************************
+//
+// The error routine that is called if the driver library encounters an error.
+//
+//*****************************************************************************
+#ifdef DEBUG
+void
+_error_(char *pcFilename, uint32_t ui32Line)
+{
+    while(1);
+}
+#endif
+
+void dec(){
+	GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(5000000);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(5000000);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(5000000);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(5000000);
+
+}
+
+void asc(){
+	GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(5000000);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(5000000);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(5000000);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(5000000);
+
+}
+
+//*****************************************************************************
+//
+// Blink the on-board LED.
+//
+//*****************************************************************************
+
+int state=0;
+
+int
+main(void)
+{
+
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOJ);
+
+    // Enable the GPIO port that is used for the on-board LED.
+    //
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+    //
+    // Check if the peripheral access is enabled.
+    
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOJ));
+    //
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION))
+    {
+    }
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
+    {
+    }
+
+    //
+    // Enable the GPIO pin for the LED (PN0).  Set the direction as output, and
+    // enable the GPIO pin for digital function.
+    //
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
+    
+    GPIOPinTypeGPIOInput(GPIO_PORTJ_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_0 | GPIO_PIN_1,
+    GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU); // Pull-up activado
+
+    //
+    // Loop forever.
+    //
+    while(1)
+    {
+    
+    	uint8_t estado = GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+
+	if (!(estado & GPIO_PIN_0)) {
+	    state=1;
+	}else{}
+
+	if (!(estado & GPIO_PIN_1)) {    
+	    state=0;
+	}else{}
+        
+        if (state==1){
+        	asc();
+        }else{
+        	if(state==0){
+        		dec();
+        	}
+        }
+    }
+}
+
+///////////////////////////////////////////////END\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+////////////////////////////////////////////////HAR EXERCISE 2///////////////////////////////
+
+ej 2 dificil
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/hw_memmap.h"
+#include "driverlib/debug.h"
+#include "driverlib/gpio.h"
+#include "driverlib/sysctl.h"
+
+#ifdef DEBUG
+void
+error(char *pcFilename, uint32_t ui32Line)
+{
+    while(1);
+}
+#endif
+
+int main(void)
+{
+    // Habilitar los periféricos de los puertos GPIO
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+    // Esperar a que los periféricos estén listos
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION)) {}
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF)) {}
+
+    // Configurar los pines como salida digital
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1 | GPIO_PIN_0);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
+
+    while(1)
+    {
+    	GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+
+        SysCtlDelay(10000000);
+        
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+
+        SysCtlDelay(10000000);
+        
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+
+        SysCtlDelay(10000000);
+        
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+
+        SysCtlDelay(10000000);
+    }
+}
+/////////////////////////////////////////////////END\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+////////////////////////////////////////////HARD EXERCISE 3//////////////////////////////////
+
+
+//*****************************************************************************
+//
+// blinky.c - Simple example to blink the on-board LED.
+//
+// Copyright (c) 2013-2020 Texas Instruments Incorporated.  All rights reserved.
+// Software License Agreement
+// 
+// Texas Instruments (TI) is supplying this software for use solely and
+// exclusively on TI's microcontroller products. The software is owned by
+// TI and/or its suppliers, and is protected under applicable copyright
+// laws. You may not combine this software with "viral" open-source
+// software in order to form a larger program.
+// 
+// THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
+// NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
+// NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
+// CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
+// DAMAGES, FOR ANY REASON WHATSOEVER.
+// 
+// This is part of revision 2.2.0.295 of the EK-TM4C1294XL Firmware Package.
+//
+//*****************************************************************************
+
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/hw_memmap.h"
+#include "driverlib/debug.h"
+#include "driverlib/gpio.h"
+#include "driverlib/sysctl.h"
+
+//*****************************************************************************
+//
+//! \addtogroup example_list
+//! <h1>Blinky (blinky)</h1>
+//!
+//! A very simple example that blinks the on-board LED using direct register
+//! access.
+//
+//*****************************************************************************
+
+//*****************************************************************************
+//
+// The error routine that is called if the driver library encounters an error.
+//
+//*****************************************************************************
+#ifdef DEBUG
+void
+_error_(char *pcFilename, uint32_t ui32Line)
+{
+    while(1);
+}
+#endif
+
+void secuency(int temp){
+            GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_1);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(temp);
+	    
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
+	    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_PIN_0);
+	    SysCtlDelay(temp);
+
+}
+//*****************************************************************************
+//
+// Blink the on-board LED.
+//
+//*****************************************************************************
+
+int state=0;
+int t=5000000;
+
+int
+main(void)
+{
+
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOJ);
+
+    // Enable the GPIO port that is used for the on-board LED.
+    //
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+    //
+    // Check if the peripheral access is enabled.
+    
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOJ));
+    //
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION))
+    {
+    }
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
+    {
+    }
+
+    //
+    // Enable the GPIO pin for the LED (PN0).  Set the direction as output, and
+    // enable the GPIO pin for digital function.
+    //
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
+    
+    GPIOPinTypeGPIOInput(GPIO_PORTJ_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_0 | GPIO_PIN_1,
+    GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU); // Pull-up activado
+
+    //
+    // Loop forever.
+    //
+    while(1)
+    {
+    
+    	uint8_t estado = GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+
+	if (!(estado & GPIO_PIN_0)) {
+	    state=1;
+	}else{}
+
+	if (!(estado & GPIO_PIN_1)) {    
+	    state=0;
+	}else{}
+        
+        if(state==1){
+        	t=t+500000;
+        }else{
+        	if(state==0){
+        		t=t-500000;
+        	}
+        }
+    }
+}
+///////////////////////////////////////////////END\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
