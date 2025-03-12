@@ -125,4 +125,79 @@ except KeyboardInterrupt:
     print("\nSaliendo...")
     GPIO.cleanup()  # Limpiar los pines GPIO
 
+
+#EJERCICIO 4
+#Ejercicio 4
+#En la raspberry esta como ej4
+import RPi.GPIO as GPIO
+import time
+
+LED1 = 16
+LED2 = 12
+LED3 = 19
+LED4 = 26
+
+BUTTON_SELECT = 18
+BUTTON_TIME = 6
+
+led_index = 0   
+time_on = 1     
+permanent_on = False  
+
+def setup():
+    GPIO.setmode(GPIO.BCM)
+
+    GPIO.setup(LED1, GPIO.OUT)
+    GPIO.setup(LED2, GPIO.OUT)
+    GPIO.setup(LED3, GPIO.OUT)
+    GPIO.setup(LED4, GPIO.OUT)
+
+    GPIO.setup(BUTTON_SELECT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(BUTTON_TIME, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    
+    GPIO.add_event_detect(BUTTON_SELECT, GPIO.FALLING, callback=change_led, bouncetime=300)
+    GPIO.add_event_detect(BUTTON_TIME, GPIO.FALLING, callback=increase_time, bouncetime=300)
+
+def change_led(channel):
+    global led_index, time_on, permanent_on
+    led_index = (led_index + 1) % 4  
+    time_on = 1  
+    permanent_on = False
+    
+def increase_time(channel):
+    global time_on, permanent_on
+    if time_on < 5:
+        time_on += 1
+    if time_on >= 5:
+        permanent_on = True 
+
+def turn_on_led():
+    if led_index == 0:
+        led = LED1
+    elif led_index == 1:
+        led = LED2
+    elif led_index == 2:
+        led = LED3
+    elif led_index == 3:
+        led = LED4
+
+    if permanent_on:
+        GPIO.output(led, GPIO.HIGH)  
+    else:
+        GPIO.output(led, GPIO.HIGH)
+        time.sleep(time_on)
+        GPIO.output(led, GPIO.LOW)
+        time.sleep(1)  
+
+def loop():
+    try:
+        while True:
+            turn_on_led()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+
+if _name_ == "_main_":
+    setup()
+    loop()
+    
     
