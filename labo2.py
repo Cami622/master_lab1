@@ -1,7 +1,7 @@
 #laboratory 2, excercises
 ##EX1
-Ejercicio 1
-En la raspberry se llama button_2
+#Ejercicio 1
+#En la raspberry se llama button_2
 import RPi.GPIO as GPIO
 import time
 
@@ -77,8 +77,8 @@ if _name_ == "_main_":
     setup()
     loop()
 #EXERCISE 2
-Ejercicio 2
-En la raspberry esta como ej2
+#Ejercicio 2
+#En la raspberry esta como ej2
 import RPi.GPIO as GPIO
 import time
 
@@ -124,3 +124,5 @@ try:
 except KeyboardInterrupt:
     print("\nSaliendo...")
     GPIO.cleanup()  # Limpiar los pines GPIO
+
+    

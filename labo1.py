@@ -10,3 +10,12 @@ for i in range(n):
 
 print(f"La suma de los {n} números es: {total}")
 #dsgit push
+
+#Excercise 2
+def invert_number(n):
+    return int(str(n)[::-1])
+
+# Example
+#num_input = 9565
+#inverted = invert_number(num_input)
+#print(inverted) 
